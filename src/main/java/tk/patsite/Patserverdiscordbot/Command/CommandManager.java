@@ -7,7 +7,6 @@ import tk.patsite.Patserverdiscordbot.Settings;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import static tk.patsite.Patserverdiscordbot.Settings.PREFIX;
 
@@ -24,8 +23,10 @@ public class CommandManager {
     public void fire(String command, String[] args, Message message) {
         if (commands.containsKey(command)) {
             if (!message.getChannel().getId().equals(Settings.BOTS_CHANNEL_ID) || !command.equals("botchannel")) {
-                if(Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_SERVER, Permission.MESSAGE_MANAGE)) {
-                    message.getAuthor().openPrivateChannel().complete().sendMessage("Hey! You can only send messages in " + Settings.BOTS_CHANNEL);
+                System.out.println(message.getChannel().getId());
+                System.out.println(Settings.BOTS_CHANNEL_ID);
+                if(!Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_CHANNEL, Permission.MANAGE_SERVER, Permission.MESSAGE_MANAGE)) {
+                    message.getAuthor().openPrivateChannel().complete().sendMessage("Hey! You can only send messages in " + Settings.BOTS_CHANNEL).queue();
                     message.delete().queue();
                     return;
                 }
