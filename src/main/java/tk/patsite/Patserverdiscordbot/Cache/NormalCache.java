@@ -1,18 +1,18 @@
-package tk.patsite.Patserverdiscordbot.MyLibs;
+package tk.patsite.Patserverdiscordbot.Cache;
 
-public class Cache<T> {
+public class NormalCache<T> extends Cache<T>{
     private final long timeout;
     private long lastTime = -1;
     private T cache;
-    private final CacheResetCallback<T> resetCache;
+    private final GetValueAsync<T> resetCache;
 
-    public Cache(long timeout, CacheResetCallback<T> resetCache) {
+    public NormalCache(long timeout, GetValueAsync<T> resetCache) {
         this.timeout = timeout;
         this.resetCache = resetCache;
-
     }
 
-    public T get() {
+    @Override
+    public T get()  {
         if (System.currentTimeMillis() - lastTime >= timeout) {
             cache = resetCache.getNewCache();
             lastTime = System.currentTimeMillis();
@@ -20,4 +20,3 @@ public class Cache<T> {
         return cache;
     }
 }
-

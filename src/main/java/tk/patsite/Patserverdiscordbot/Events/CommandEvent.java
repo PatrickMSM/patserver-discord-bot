@@ -12,8 +12,8 @@ public class CommandEvent extends ListenerAdapter {
 
     private final CommandManager man;
 
-    public CommandEvent() {
-        man = new CommandManager();
+    public CommandEvent(CommandManager man) {
+        this.man = man;
     }
 
     @Override
