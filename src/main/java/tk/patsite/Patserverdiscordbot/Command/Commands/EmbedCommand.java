@@ -10,10 +10,11 @@ import java.util.Map;
 
 public class EmbedCommand extends Command {
 
-    private final Map<String, Command> commands;
+    private Map<String, Command> commands;
+    private final CommandManager manager;
 
     public EmbedCommand(CommandManager manager) {
-        commands = manager.getCommands();
+        this.manager = manager;
     }
 
     @Override
@@ -65,6 +66,9 @@ public class EmbedCommand extends Command {
                 case "commands" -> {
                     final EmbedBuilder embed = (new EmbedBuilder()).setTitle("Bot Commands: ").setColor(0x14baba);
 
+                    if (commands == null)
+                        commands = manager.getCommands();
+
                     commands.forEach((name, command) -> {
                         final String commandDesc = command.getDescription();
                         if (commandDesc != null)
@@ -72,7 +76,6 @@ public class EmbedCommand extends Command {
                     });
 
                     message.getChannel().sendMessage(embed.build()).queue();
-
                 }
             }
         }
