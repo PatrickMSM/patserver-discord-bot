@@ -21,16 +21,12 @@ public class WeightedCacheTimeoutIfA<T> extends Cache<T>{
             if (System.currentTimeMillis() - lastTime >= timeoutIfX) {
                 cache = resetCache.getNewCache();
                 lastTime = System.currentTimeMillis();
-
             }
-            System.out.println("x");
         } else {
             if (System.currentTimeMillis() - lastTime >= timeoutIfNotX) {
                 cache = resetCache.getNewCache();
                 lastTime = System.currentTimeMillis();
-
             }
-            System.out.println("not x");
         }
 
         return cache;
