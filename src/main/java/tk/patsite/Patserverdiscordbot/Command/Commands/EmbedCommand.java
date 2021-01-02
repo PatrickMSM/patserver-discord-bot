@@ -12,10 +12,7 @@ public class EmbedCommand extends Command {
 
     private final Map<String, Command> commands;
 
-    private final CommandManager manager;
-
     public EmbedCommand(CommandManager manager) {
-        this.manager = manager;
         commands = manager.getCommands();
     }
 
