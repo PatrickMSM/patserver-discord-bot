@@ -11,14 +11,22 @@ import java.util.Objects;
 import static tk.patsite.Patserverdiscordbot.Settings.PREFIX;
 
 public class CommandManager {
-    Map<String, Command> commands = Map.of(
+
+
+
+    private final Map<String, Command> commands = Map.of(
             "ip", new IpCommand(),
             "status", new StatusCommand(),
             "rules", new RulesCommand(),
             "help", new HelpCommand(),
             "ping", new PingCommand(),
-            "botchannel", new BotsCommand()
+            "botchannel", new BotsCommand(),
+            "embed", new EmbedCommand(this)
     );
+
+    public final Map<String, Command> getCommands() {
+        return commands;
+    }
 
     public void fire(String command, String[] args, Message message) {
         if (commands.containsKey(command)) {

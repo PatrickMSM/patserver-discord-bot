@@ -3,9 +3,22 @@ package tk.patsite.Patserverdiscordbot.Command.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import tk.patsite.Patserverdiscordbot.Command.Command;
+import tk.patsite.Patserverdiscordbot.Command.CommandManager;
 import tk.patsite.Patserverdiscordbot.Settings;
 
+import java.util.Map;
+
 public class EmbedCommand extends Command {
+
+    private final Map<String, Command> commands;
+
+    private final CommandManager manager;
+
+    public EmbedCommand(CommandManager manager) {
+        this.manager = manager;
+        commands = manager.getCommands();
+    }
+
     @Override
     public void perform(Message message, String[] args) {
         if (!message.getAuthor().getId().equals(Settings.PATRICK_ID)) {
@@ -53,6 +66,15 @@ public class EmbedCommand extends Command {
                             .setColor(0x14baba).setTitle("Voice chat rules: ").build()).queue();
                 }
                 case "commands" -> {
+                    final EmbedBuilder embed = (new EmbedBuilder()).setTitle("Bot Commands: ").setColor(0x14baba);
+
+                    commands.forEach((name, command) -> {
+                        final String commandDesc = command.getDescription();
+                        if (commandDesc != null)
+                            embed.addField(Settings.PREFIX + name, commandDesc, false);
+                    });
+
+                    message.getChannel().sendMessage(embed.build()).queue();
 
                 }
             }
