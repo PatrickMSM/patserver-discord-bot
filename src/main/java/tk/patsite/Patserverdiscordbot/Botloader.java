@@ -9,7 +9,7 @@ import tk.patsite.Patserverdiscordbot.MyLibs.Log;
 import javax.security.auth.login.LoginException;
 
 public final class Botloader {
-    public Botloader(Log log, String token) throws LoginException, InterruptedException {
+    public Botloader(final Log log, String token) throws LoginException, InterruptedException {
 
 
         final CommandManager commandManager = new CommandManager();
@@ -35,5 +35,11 @@ public final class Botloader {
 
 
         log.info("\n \n Bot started! Ping: " + api.getGatewayPing());
+
+
+        // Send the token to garbage
+
+        token = null;
+        System.gc();
     }
 }
