@@ -38,8 +38,10 @@ public final class Botloader {
 
 
         // Send the token to garbage
-
         token = null;
+
+
+        // Clear up after initialization
         System.gc();
     }
 }
