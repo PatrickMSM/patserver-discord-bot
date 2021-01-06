@@ -5,7 +5,7 @@ package tk.patsite.Patserverdiscordbot.Cache;
  *
  * @param <T> the type parameter
  */
-public class TimeoutCache<T> extends Cache<T>{
+public class TimeoutCache<T> implements Cache<T>{
     private final long timeoutIfX;
     private final long timeoutIfNotX;
     private long lastTime = -1;

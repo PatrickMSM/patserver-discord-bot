@@ -1,6 +1,6 @@
 package tk.patsite.Patserverdiscordbot.Cache;
 
-public abstract class Cache<T> {
-    public abstract T get();
+public interface Cache<T> {
+    T get();
 }
 

@@ -10,8 +10,6 @@ import javax.security.auth.login.LoginException;
 
 public final class Botloader {
     public Botloader(final Log log, String token) throws LoginException, InterruptedException {
-
-
         final CommandManager commandManager = new CommandManager();
 
         log.info("[WORKING] Init");
@@ -43,5 +41,6 @@ public final class Botloader {
 
         // Clear up after initialization
         System.gc();
+        System.runFinalization();
     }
 }

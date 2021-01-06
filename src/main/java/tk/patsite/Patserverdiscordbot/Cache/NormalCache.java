@@ -1,6 +1,6 @@
 package tk.patsite.Patserverdiscordbot.Cache;
 
-public class NormalCache<T> extends Cache<T>{
+public class NormalCache<T> implements Cache<T>{
     private final long timeout;
     private long lastTime = -1;
     private T cache;
