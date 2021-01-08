@@ -11,6 +11,7 @@ public class MemberJoinEvent extends ListenerAdapter {
 
     public MemberJoinEvent(Log log) {
         this.log = log;
+        log.info("ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccumzon");
     }
 
     @Override
