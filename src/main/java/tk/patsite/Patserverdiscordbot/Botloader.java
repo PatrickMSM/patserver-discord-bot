@@ -20,7 +20,7 @@ public final class Botloader {
         JDA api = JDABuilder.createDefault(token)
                 // .addEventListener(new EventListener() extends ListenerAdapter or implements EventListener) to add an event listener
                 .addEventListeners(new CommandEvent(commandManager))
-                .addEventListeners(new MemberJoinEvent())
+                .addEventListeners(new MemberJoinEvent(log))
                 .build();
 
         commandManager.init();
