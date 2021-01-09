@@ -2,17 +2,9 @@ package tk.patsite.Patserverdiscordbot.Events;
 
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import tk.patsite.Patserverdiscordbot.MyLibs.Log;
 import tk.patsite.Patserverdiscordbot.Settings;
 
 public class MemberJoinEvent extends ListenerAdapter {
-
-    private final Log log;
-
-    public MemberJoinEvent(Log log) {
-        this.log = log;
-    }
-
     @Override
     public void onGuildMemberRoleAdd(final GuildMemberRoleAddEvent event) {
         if (event.getRoles().contains(event.getGuild().getRoleById(Settings.MEMBER_ROLE))) {

@@ -13,7 +13,11 @@ import static tk.patsite.Patserverdiscordbot.Settings.PREFIX;
 public class CommandManager {
 
 
-    private StatusCommand status = new StatusCommand();
+    private final StatusCommand status;
+
+    {
+        status = new StatusCommand();
+    }
 
     private final Map<String, Command> commands = Map.of(
             "ip", new IpCommand(),
@@ -22,7 +26,8 @@ public class CommandManager {
             "help", new HelpCommand(),
             "ping", new PingCommand(),
             "botchannel", new BotsCommand(),
-            "embed", new EmbedCommand(this)
+            "embed", new EmbedCommand(this),
+            "ghostping", new GhostpingCommand()
     );
 
     public final void init() {
