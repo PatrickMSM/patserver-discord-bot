@@ -11,10 +11,10 @@ public class GhostpingCommand extends Command {
         if (args.length < 1 || !message.getAuthor().getId().equals(Settings.PATRICK_ID))
             return;
 
-        Member userToGhostping = message.getGuild().getMemberById(args[1]);
+        Member userToGhostping = message.getGuild().getMemberById(args[0].trim());
 
         if (userToGhostping == null) {
-            message.getAuthor().openPrivateChannel().complete().sendMessage(message.getContentRaw().trim() + " is not a valid user id!").queue();
+            message.getAuthor().openPrivateChannel().complete().sendMessage(args[0].trim() + " is not a valid user id!").queue();
             return;
         }
 
