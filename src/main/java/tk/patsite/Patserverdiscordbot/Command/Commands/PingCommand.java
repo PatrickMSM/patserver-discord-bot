@@ -13,7 +13,7 @@ public class PingCommand extends Command  {
 
         final long before = System.currentTimeMillis();
 
-        message.getChannel().sendMessage("dummyMsg").queue((msg)->{
+        message.getChannel().sendMessage("dumm").flatMap(msg -> {
 
             final long after = System.currentTimeMillis();
             msg.delete().queue();
@@ -21,8 +21,8 @@ public class PingCommand extends Command  {
 
             embed.addField("Message Ping", ""+ (after - before), false);
 
-            message.getChannel().sendMessage(embed.build()).queue();
-        });
+            return message.getChannel().sendMessage(embed.build());
+        }).queue();
     }
 
     @Override
