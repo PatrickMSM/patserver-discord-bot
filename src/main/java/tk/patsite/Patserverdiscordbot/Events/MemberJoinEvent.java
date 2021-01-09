@@ -11,14 +11,11 @@ public class MemberJoinEvent extends ListenerAdapter {
 
     public MemberJoinEvent(Log log) {
         this.log = log;
-        log.info("ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccumzon");
     }
 
     @Override
     public void onGuildMemberRoleAdd(final GuildMemberRoleAddEvent event) {
-        log.info("event ran");
         if (event.getRoles().contains(event.getGuild().getRoleById(Settings.MEMBER_ROLE))) {
-            log.info("tru if");
             // Welcome user
             event.getGuild().getTextChannelById(Settings.WELCOME_CHANNEL).sendMessage(Settings.RANDOM_WELCOME().replaceFirst("\\{user}", event.getMember().getAsMention())).queue();
         }
