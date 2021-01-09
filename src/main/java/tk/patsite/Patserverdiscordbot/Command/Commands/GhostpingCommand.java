@@ -15,6 +15,7 @@ public class GhostpingCommand extends Command {
 
         if (userToGhostping == null) {
             message.getAuthor().openPrivateChannel().complete().sendMessage(args[0].trim() + " is not a valid user id!").queue();
+            message.delete().queue();
             return;
         }
 
