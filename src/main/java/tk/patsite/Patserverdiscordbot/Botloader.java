@@ -2,6 +2,7 @@ package tk.patsite.Patserverdiscordbot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import tk.patsite.Patserverdiscordbot.Command.CommandManager;
 import tk.patsite.Patserverdiscordbot.Events.CommandEvent;
 import tk.patsite.Patserverdiscordbot.Events.MemberJoinEvent;
@@ -20,6 +21,8 @@ public final class Botloader {
         JDA api = JDABuilder.createDefault(token)
                 // .addEventListener(new EventListener() extends ListenerAdapter or implements EventListener) to add an event listener
                 .addEventListeners(new CommandEvent(commandManager))
+                // Intent so I CAN TRACK MEMBERS
+                .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .addEventListeners(new MemberJoinEvent(log))
                 .build();
 
