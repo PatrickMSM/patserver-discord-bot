@@ -9,7 +9,7 @@ public class PingCommand extends Command  {
     public void perform(Message message, String[] args) {
         final EmbedBuilder embed = new EmbedBuilder();
         embed.addField("API Ping", ""+message.getJDA().getGatewayPing(), false);
-        embed.addField("REST (Internet) Ping", ""+message.getJDA().getRestPing(), false);
+        embed.addField("REST (Bot Internet) Ping", ""+message.getJDA().getRestPing().complete(), false);
 
         final long before = System.currentTimeMillis();
 
