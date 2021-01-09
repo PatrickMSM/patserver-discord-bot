@@ -3,6 +3,7 @@ package tk.patsite.Patserverdiscordbot.Command.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import tk.patsite.Patserverdiscordbot.Command.Command;
+import tk.patsite.Patserverdiscordbot.Settings;
 
 public class PingCommand extends Command  {
     @Override
@@ -11,9 +12,14 @@ public class PingCommand extends Command  {
         embed.addField("API Ping", ""+message.getJDA().getGatewayPing(), false);
         embed.addField("REST (Bot Internet) Ping", ""+message.getJDA().getRestPing().complete(), false);
 
+        // this before the ping so it does not influence the time
+        // generating an int ofc takes some time
+        String dummyMessageRand = Settings.random.nextInt(9999) +"";
+
+
         final long before = System.currentTimeMillis();
 
-        message.getChannel().sendMessage("dumm").flatMap(msg -> {
+        message.getChannel().sendMessage("dummy-message-"+dummyMessageRand).flatMap(msg -> {
 
             final long after = System.currentTimeMillis();
             msg.delete().queue();
