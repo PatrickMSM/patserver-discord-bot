@@ -23,7 +23,7 @@ public final class Botloader {
                 .addEventListeners(new CommandEvent(commandManager))
                 // Intent so I CAN TRACK MEMBERS
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                .addEventListeners(new MemberJoinEvent(log))
+                .addEventListeners(new MemberJoinEvent())
                 .build();
 
         commandManager.init();

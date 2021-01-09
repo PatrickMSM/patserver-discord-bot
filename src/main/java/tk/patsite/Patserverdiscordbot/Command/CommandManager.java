@@ -36,6 +36,7 @@ public class CommandManager {
 
         status.refreshStatusCache();
 
+        commands.ge
     }
 
     public final Map<String, Command> getCommands() {
