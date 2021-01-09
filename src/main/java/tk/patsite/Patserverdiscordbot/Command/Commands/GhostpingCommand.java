@@ -8,12 +8,18 @@ import tk.patsite.Patserverdiscordbot.Settings;
 public class GhostpingCommand extends Command {
     @Override
     public void perform(Message message, String[] args) {
-        if (args.length < 1)
+        if (!message.getAuthor().getId().equals(Settings.PATRICK_ID))
             return;
+
+
+        if (args.length < 1) {
+            message.delete().queue();
+            return;
+        }
 
         Member userToGhostping = message.getGuild().getMemberById(args[0].trim());
 
-        if (userToGhostping == null || !message.getAuthor().getId().equals(Settings.PATRICK_ID)) {
+        if (userToGhostping == null ) {
             message.getAuthor().openPrivateChannel().complete().sendMessage(args[0].trim() + " is not a valid user id!").queue();
             message.delete().queue();
             return;
