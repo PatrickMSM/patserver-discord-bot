@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 final class IOUtil {
-    static String getARecord(String Site) {
+    String getARecord(String Site) {
         String host = "";
         try {
             final Resolver resolver = new ExtendedResolver(new String[]{"1.1.1.1", "1.0.0.1", "8.8.8.8", "8.8.4.4"});
@@ -30,7 +30,7 @@ final class IOUtil {
         return host;
     }
 
-    static void WriteVarInt(DataOutputStream out, int intVal) throws IOException {
+    void WriteVarInt(DataOutputStream out, int intVal) throws IOException {
         while (true) {
             if ((intVal & 0xFFFFFF80) == 0) {
                 out.writeByte(intVal);
@@ -42,7 +42,7 @@ final class IOUtil {
         }
     }
 
-    static int ReadVarInt(DataInputStream in) throws IOException {
+    int ReadVarInt(DataInputStream in) throws IOException {
         int i = 0;
         int j = 0;
         while (true) {
@@ -62,7 +62,7 @@ final class IOUtil {
         return i;
     }
 
-    static void except(final boolean b, final String str) throws PingException {
+    void except(final boolean b, final String str) throws PingException {
         if (b) {
             throw new PingException(str);
         }

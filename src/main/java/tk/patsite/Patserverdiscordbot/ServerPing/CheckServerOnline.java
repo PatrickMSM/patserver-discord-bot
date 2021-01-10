@@ -10,6 +10,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 public final class CheckServerOnline {
+
+    private static final IOUtil IOUtil = new IOUtil();
+
     public static CompletableFuture<Boolean> IsServerOnline(String Address) {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
         try (final Socket sock = new Socket()) {
