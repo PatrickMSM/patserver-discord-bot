@@ -9,9 +9,9 @@ public final class UserAuthenticator {
         }
     }
     public final void roleAuth(Member user) {
-        if (onRoleCheck(user)) {
+        /*if (onRoleCheck(user)) {
             accept(user);
-        }
+        } */
     }
 
 
