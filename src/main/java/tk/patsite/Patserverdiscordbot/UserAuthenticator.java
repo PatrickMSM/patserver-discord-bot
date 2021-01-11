@@ -50,7 +50,8 @@ public final class UserAuthenticator {
 
         for (MessageReaction reaction : verifMessage.getReactions()) {
             for (User user1 : reaction.retrieveUsers()) {
-                if (user.getUser().equals(user1))
+                if (user.getUser().getId().equals(user1.getId()))
+                    System.out.println(user.getEffectiveName());
                     return true;
             }
         }
