@@ -1,21 +1,35 @@
 package tk.patsite.Patserverdiscordbot;
 
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.*;
 
 public final class UserAuthenticator {
-
-    public void reactAuth(Member user) {
+    public final void reactAuth(Member user) {
         if (onReactCheck(user)) {
-            Guild userG = user.getGuild();
-
-            userG.addRoleToMember(user, userG.getRoleById(Settings.AuthSettings.MEMBER_ROLE)).queue();
-            userG.removeRoleFromMember(user, userG.getRoleById(Settings.AuthSettings.PAUTH_ROLE)).queue();
+            accept(user);
+        }
+    }
+    public final void roleAuth(Member user) {
+        if (onRoleCheck(user)) {
+            accept(user);
         }
     }
 
-    public boolean onReactCheck(Member user) {
+
+
+
+    private void accept(Member user) {
+        Guild userG = user.getGuild();
+
+        userG.addRoleToMember(user, userG.getRoleById(Settings.AuthSettings.MEMBER_ROLE)).queue();
+        userG.removeRoleFromMember(user, userG.getRoleById(Settings.AuthSettings.PAUTH_ROLE)).queue();
+    }
+
+
+
+
+
+
+    private boolean onReactCheck(Member user) {
         // The user already reacted.
         // Check if he actually has the role,
 
@@ -27,7 +41,20 @@ public final class UserAuthenticator {
         return false;
     }
 
-    public boolean onRoleCheck(Member user) {
+    private boolean onRoleCheck(Member user) {
+        // The user already has the role.
+        // Check if he actually has reacted.
+
+        Message verifMessage = user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).getHistory().getMessageById(Settings.AuthSettings.VERIFY_MESSAGE);
+
+
+        for (MessageReaction reaction : verifMessage.getReactions()) {
+            for (User user1 : reaction.retrieveUsers()) {
+                if (user.getUser().equals(user1))
+                    return true;
+            }
+        }
+
         return false;
     }
 

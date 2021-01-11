@@ -18,6 +18,7 @@ public final class Settings {
         public static final String PREFIX = "p!";
         public static final String PATRICK_ID = "300559445988081664";
         public static final Random RANDOM = new Random();
+        public static final String GUILD_ID = "768515187988103169";
     }
 
     public static final String NEWLINE = System.getProperty("line.separator");
@@ -38,5 +39,6 @@ public final class Settings {
         public static final String PAUTH_ROLE = "790880837658214410"; // The role given to the user after they finished all but PAuth
         public static final String VERIFY_MESSAGE = "790890271641567272";
         public static final String VERIFY_CHANNEL = "768729254200082432";
+        public static final String VERIFY_ICON = "✅";
     }
 }
