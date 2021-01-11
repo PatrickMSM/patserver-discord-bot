@@ -7,7 +7,7 @@ import tk.patsite.Patserverdiscordbot.Settings;
 public class BotsCommand extends Command {
     @Override
     public void perform(Message message, String[] args) {
-        message.getAuthor().openPrivateChannel().complete().sendMessage(message.getAuthor().getAsMention() + "The bot command channel is: " + Settings.BOTS_CHANNEL).queue();
+        message.getAuthor().openPrivateChannel().complete().sendMessage(message.getAuthor().getAsMention() + "The bot command channel is: " + Settings.Channels.BOTS_CHANNEL).queue();
         message.delete().queue();
     }
 

@@ -7,7 +7,7 @@ import tk.patsite.Patserverdiscordbot.Settings;
 public class IpCommand extends Command {
     @Override
     public void perform(Message message, String[] args) {
-        message.reply("The ip for the server is: " + Settings.IP).queue();
+        message.reply("The ip for the server is: " + Settings.Misc.IP).queue();
     }
 
     @Override

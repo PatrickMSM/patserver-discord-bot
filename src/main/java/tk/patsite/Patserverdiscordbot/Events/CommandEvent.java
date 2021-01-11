@@ -25,12 +25,12 @@ public class CommandEvent extends ListenerAdapter {
         final String message = event.getMessage().getContentRaw().trim();
 
         // Check if the commands start with the prefix
-        if (!message.startsWith(Settings.PREFIX))
+        if (!message.startsWith(Settings.Misc.PREFIX))
             return;
 
 
         // Remove prefix
-        final String rawCommand = message.replace(Settings.PREFIX, "");
+        final String rawCommand = message.replaceFirst(Settings.Misc.PREFIX, "");
 
         // Get the main command
         final String command = rawCommand.split(" ")[0];

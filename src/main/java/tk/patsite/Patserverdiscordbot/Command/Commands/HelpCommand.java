@@ -7,7 +7,7 @@ import tk.patsite.Patserverdiscordbot.Settings;
 public class HelpCommand extends Command {
     @Override
     public void perform(Message message, String[] args) {
-        message.reply("Command help channel: " + Settings.HELP_CHANNEL).queue();
+        message.reply("Command help channel: " + Settings.Channels.HELP_CHANNEL).queue();
     }
 
     @Override

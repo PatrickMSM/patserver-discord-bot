@@ -19,7 +19,7 @@ public class EmbedCommand extends Command {
 
     @Override
     public void perform(Message message, String[] args) {
-        if (!message.getAuthor().getId().equals(Settings.PATRICK_ID)) {
+        if (!message.getAuthor().getId().equals(Settings.Misc.PATRICK_ID)) {
             return;
         }
         if (args.length >= 1) {
@@ -72,7 +72,7 @@ public class EmbedCommand extends Command {
                     commands.forEach((name, command) -> {
                         final String commandDesc = command.getDescription();
                         if (commandDesc != null)
-                            embed.addField(Settings.PREFIX + name, commandDesc, false);
+                            embed.addField(Settings.Misc.PREFIX + name, commandDesc, false);
                     });
 
                     message.getChannel().sendMessage(embed.build()).queue();

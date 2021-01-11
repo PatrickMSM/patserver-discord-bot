@@ -6,11 +6,16 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import tk.patsite.Patserverdiscordbot.Command.CommandManager;
 import tk.patsite.Patserverdiscordbot.Events.CommandEvent;
 import tk.patsite.Patserverdiscordbot.Events.MemberJoinEvent;
+import tk.patsite.Patserverdiscordbot.Events.ReactionEvent;
 import tk.patsite.Patserverdiscordbot.MyLibs.Log;
 
 import javax.security.auth.login.LoginException;
 
 public final class Botloader {
+
+    private final UserAuthenticator userAuth = new UserAuthenticator();
+
+
     public Botloader(final Log log, String token) throws LoginException, InterruptedException {
         final CommandManager commandManager = new CommandManager();
 
@@ -23,7 +28,9 @@ public final class Botloader {
                 .addEventListeners(new CommandEvent(commandManager))
                 // Intent so I CAN TRACK MEMBERS
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                .enableIntents(GatewayIntent.GUILD_MESSAGE_REACTIONS)
                 .addEventListeners(new MemberJoinEvent())
+                .addEventListeners(new ReactionEvent(userAuth))
                 .build();
 
         commandManager.init();

@@ -8,7 +8,7 @@ import tk.patsite.Patserverdiscordbot.Settings;
 public class GhostpingCommand extends Command {
     @Override
     public void perform(Message message, String[] args) {
-        if (!message.getAuthor().getId().equals(Settings.PATRICK_ID))
+        if (!message.getAuthor().getId().equals(Settings.Misc.PATRICK_ID))
             return;
 
 

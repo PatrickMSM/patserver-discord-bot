@@ -9,7 +9,7 @@ import tk.patsite.Patserverdiscordbot.Settings;
 
 public class StatusCommand extends Command {
 
-    private final Cache<Boolean> onlineCache = new TimeoutCache<>(120000L, 3000L, () -> new CheckServerOnline().IsServerOnline(Settings.IP).join(), true);
+    private final Cache<Boolean> onlineCache = new TimeoutCache<>(120000L, 3000L, () -> new CheckServerOnline().IsServerOnline(Settings.Misc.IP).join(), true);
 
     public final void refreshStatusCache( ) {
         onlineCache.get();

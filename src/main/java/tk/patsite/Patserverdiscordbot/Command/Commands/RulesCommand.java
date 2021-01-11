@@ -8,7 +8,7 @@ public class RulesCommand extends Command {
 
     @Override
     public void perform(Message message, String[] args) {
-        message.reply("Rules channel: " + Settings.RULE_CHANNEL);
+        message.reply("Rules channel: " + Settings.Channels.RULE_CHANNEL).queue();
     }
 
     @Override
