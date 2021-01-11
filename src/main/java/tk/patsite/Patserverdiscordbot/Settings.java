@@ -37,7 +37,7 @@ public final class Settings {
     public static final class AuthSettings{
         public static final String MEMBER_ROLE = "770356512391823372"; // The role given to the user after they finished all auth
         public static final String PAUTH_ROLE = "790880837658214410"; // The role given to the user after they finished all but PAuth
-        public static final String VERIFY_MESSAGE = "798212732305670165";
+        public static final String VERIFY_MESSAGE = "790890271641567272";
         public static final String VERIFY_CHANNEL = "768729254200082432";
     }
 }
