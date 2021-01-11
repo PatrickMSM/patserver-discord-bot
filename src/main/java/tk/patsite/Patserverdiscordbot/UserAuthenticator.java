@@ -4,14 +4,14 @@ import net.dv8tion.jda.api.entities.*;
 
 public final class UserAuthenticator {
     public final void reactAuth(Member user) {
-        /* if (onReactCheck(user)) {
+        if (onReactCheck(user)) {
              accept(user);
-        } */
+        }
     }
     public final void roleAuth(Member user) {
-        /*if (onRoleCheck(user)) {
+        if (onRoleCheck(user)) {
             accept(user);
-        } */
+        }
     }
 
 
