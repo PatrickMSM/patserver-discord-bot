@@ -15,6 +15,9 @@ public class ReactionEvent extends ListenerAdapter {
     @Override
     public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
         auth.reactAuth(event.getMember());
+
+
+        System.out.println(event.getMember().getAsMention() + " reacted");
     }
 
 }
