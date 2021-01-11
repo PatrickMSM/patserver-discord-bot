@@ -15,5 +15,7 @@ public class RoleEvent extends ListenerAdapter {
     @Override
     public void onGuildMemberRoleAdd(GuildMemberRoleAddEvent event) {
         auth.roleAuth(event.getMember());
+
+        System.out.println(event.getMember().getAsMention() + " reacted");
     }
 }
