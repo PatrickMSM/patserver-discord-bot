@@ -16,8 +16,11 @@ public final class TimedActionQueue {
 
     public void add(Runnable runnable) {
         queue.add(runnable);
-        if (thread.isInterrupted())
+        if (thread.isInterrupted()) {
             thread.start();
+            System.out.println("stsart");
+        }
+
     }
 
     public TimedActionQueue() {
@@ -36,7 +39,6 @@ public final class TimedActionQueue {
 
 
         thread = new Thread(action::run, "TimedActionQueueThread-"+ID);
-        stop();
     }
 
 }
