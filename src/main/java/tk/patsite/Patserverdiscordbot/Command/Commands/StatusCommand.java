@@ -9,7 +9,7 @@ import tk.patsite.Patserverdiscordbot.Settings;
 
 public class StatusCommand extends Command {
 
-    private final Cache<Boolean> onlineCache = new TimeoutCache<>(120000L, 3000L, () -> new CheckServerOnline().IsServerOnline(Settings.Misc.IP).join(), true);
+    private final Cache<Boolean> onlineCache = new TimeoutCache<>(120000L, 3000L, () -> CheckServerOnline.IsServerOnline(Settings.Misc.IP).join(), true);
 
     public final void refreshStatusCache( ) {
         onlineCache.get();
@@ -18,10 +18,10 @@ public class StatusCommand extends Command {
     @Override
     public void perform(Message message, String[] args) {
         if(onlineCache.get()) {
-            // It's online
+            // It's online.
             message.getChannel().sendMessage("The server is currently online.").queue();
         } else {
-            // It's offline
+            // It's offline.
             message.getChannel().sendMessage("The server is currently offline.").queue();
         }
     }
