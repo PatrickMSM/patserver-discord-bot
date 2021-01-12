@@ -16,7 +16,8 @@ public final class TimedActionQueue {
 
     public void add(Runnable runnable) {
         queue.add(runnable);
-        thread.start();
+        if (thread.isInterrupted())
+            thread.start();
     }
 
     public TimedActionQueue() {
