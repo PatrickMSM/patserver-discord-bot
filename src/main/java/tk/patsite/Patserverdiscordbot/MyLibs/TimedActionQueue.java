@@ -10,17 +10,8 @@ public final class TimedActionQueue {
     private final long ID = Settings.Misc.RANDOM.nextLong(); // random thread ID
     private final Thread thread;
 
-    private void stop() {
-        thread.interrupt();
-    }
-
     public void add(Runnable runnable) {
         queue.add(runnable);
-        if (thread.isInterrupted()) {
-            thread.start();
-            System.out.println("stsart");
-        }
-
     }
 
     public TimedActionQueue() {
@@ -29,9 +20,7 @@ public final class TimedActionQueue {
                 try {Thread.sleep(1000);
                 } catch (InterruptedException ignored) {/* ignored */}
                 Runnable r = queue.poll();
-                if (r == null) {
-                    stop();
-                } else {
+                if (r != null) {
                     r.run();
                 }
             }
@@ -39,9 +28,7 @@ public final class TimedActionQueue {
 
 
         thread = new Thread(action::run, "TimedActionQueueThread-"+ID);
-        stop();
     }
-
 }
 
 
