@@ -14,11 +14,12 @@ public final class TimedActionQueue {
         queue.add(runnable);
     }
 
+
     public TimedActionQueue() {
         Action action = () -> {
             while (true) {
                 try {Thread.sleep(1000);
-                } catch (InterruptedException ignored) {/* ignored */}
+                } catch (InterruptedException e) {e.printStackTrace();}
                 Runnable r = queue.poll();
                 if (r != null) {
                     r.run();
@@ -28,6 +29,7 @@ public final class TimedActionQueue {
 
 
         thread = new Thread(action::run, "TimedActionQueueThread-"+ID);
+        thread.start();
     }
 }
 
