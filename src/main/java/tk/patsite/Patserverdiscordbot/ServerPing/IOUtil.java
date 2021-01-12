@@ -12,7 +12,7 @@ final class IOUtil {
     String getARecord(String Site) {
         String host = "";
         try {
-            final Resolver resolver = new ExtendedResolver(new String[]{"1.1.1.1", "1.0.0.1", "8.8.8.8", "8.8.4.4"});
+            final Resolver resolver = new ExtendedResolver(new String[]{"1.1.1.1", "1.0.0.1"});
             final Lookup lookup = new Lookup(Site, Type.A);
             lookup.setResolver(resolver);
 
