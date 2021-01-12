@@ -2,14 +2,16 @@ package tk.patsite.Patserverdiscordbot;
 
 import net.dv8tion.jda.api.entities.*;
 
+import java.util.List;
+
 public final class UserAuthenticator {
-    public final void reactAuth(Member user) {
-        if (onReactCheck(user)) {
+    public final void reactAuth(Member user, MessageReaction reaction) {
+        if (onReactCheck(user, reaction)) {
              accept(user);
         }
     }
-    public final void roleAuth(Member user) {
-        if (onRoleCheck(user)) {
+    public final void roleAuth(Member user, List<Role> roles) {
+        if (onRoleCheck(user, roles)) {
             accept(user);
         }
     }
@@ -28,8 +30,19 @@ public final class UserAuthenticator {
 
 
 
+    private Message verifMessage;
+    private boolean onReactCheck(Member user, MessageReaction reaction) {
+        if (verifMessage == null) {
+            verifMessage = user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveMessageById(Settings.AuthSettings.VERIFY_MESSAGE).complete();
+        }
+        // Check if the user reacted to the correct message
+        for (MessageReaction reaction2 : verifMessage.getReactions()) {
+            if (!reaction.equals(reaction2)) {
+                return false;
+            }
+        }
 
-    private boolean onReactCheck(Member user) {
+
         // The user already reacted.
         // Check if he actually has the role,
 
@@ -42,14 +55,23 @@ public final class UserAuthenticator {
     }
 
 
-    private Message verifMessage;
-    private boolean onRoleCheck(Member user) {
-        // The user already has the role.
-        // Check if he actually has reacted.
 
+    private boolean onRoleCheck(Member user, List<Role> roles) {
         if (verifMessage == null) {
             verifMessage = user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveMessageById(Settings.AuthSettings.VERIFY_MESSAGE).complete();
         }
+        // Check if the user got the correct role.
+
+
+        for(Role role2 : roles) {
+            if (!user.getGuild().getRoleById(Settings.AuthSettings.PAUTH_ROLE).getId().equals(role2.getId())) {
+                return false;
+            }
+        }
+
+
+        // The user already has the role.
+        // Check if he actually has reacted.
 
 
         for (MessageReaction reaction : verifMessage.getReactions()) {
