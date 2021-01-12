@@ -31,7 +31,7 @@ public class ClearCommand extends Command {
 
         if (msgToDelete % 100 > 0) {
             for(long i = 0; i < msgToDelete/100L; i ++) {
-                message.getChannel().deleteMessages();
+                //
             }
         }
     }
