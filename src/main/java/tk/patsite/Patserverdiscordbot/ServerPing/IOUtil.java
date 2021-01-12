@@ -1,35 +1,10 @@
 package tk.patsite.Patserverdiscordbot.ServerPing;
 
-import org.xbill.DNS.*;
-import org.xbill.DNS.Record;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 final class IOUtil {
-    String getARecord(String Site) {
-        String host = "";
-        try {
-            final Resolver resolver = new ExtendedResolver(new String[]{"1.1.1.1", "1.0.0.1"});
-            final Lookup lookup = new Lookup(Site, Type.A);
-            lookup.setResolver(resolver);
-
-            org.xbill.DNS.Record[] records = lookup.run();
-
-            if (records != null) {
-                for (Record record : records) {
-                    host = ((ARecord) record).getAddress().getHostAddress();
-                }
-            }
-
-        } catch (TextParseException | UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return host;
-    }
-
     void WriteVarInt(DataOutputStream out, int intVal) throws IOException {
         while (true) {
             if ((intVal & 4294967168L) == 0) {  // 0xFFFFFF80

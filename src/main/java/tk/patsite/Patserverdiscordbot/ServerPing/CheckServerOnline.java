@@ -68,9 +68,9 @@ public final class CheckServerOnline {
 
                 completableFuture.complete(true);
             }
-        } catch (IOException ignored) {
+        //} catch (IOException ignored) {
             /* ignored */
-        } catch (PingException e) {
+        } catch (PingException | IOException e) {
             e.printStackTrace();
         }
         completableFuture.complete(false);
