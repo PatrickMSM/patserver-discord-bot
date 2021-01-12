@@ -32,12 +32,12 @@ final class IOUtil {
 
     void WriteVarInt(DataOutputStream out, int intVal) throws IOException {
         while (true) {
-            if ((intVal & 0xFFFFFF80) == 0) {
+            if ((intVal & 4294967168L) == 0) {  // 0xFFFFFF80
                 out.writeByte(intVal);
                 return;
             }
 
-            out.writeByte(intVal & 0x7F | 0x80);
+            out.writeByte(intVal & 127 | 128);  // 0x7F |  0x80
             intVal >>>= 7;
         }
     }
@@ -48,13 +48,13 @@ final class IOUtil {
         while (true) {
             int k = in.readByte();
 
-            i |= (k & 0x7F) << j++ * 7;
+            i |= (k & 127) << j++ * 7; // 0x7F
 
             if (j > 5) {
                 throw new RuntimeException("VarInt too big");
             }
 
-            if ((k & 0x80) != 128) {
+            if ((k & 128) != 128) { //0x80
                 break;
             }
         }
