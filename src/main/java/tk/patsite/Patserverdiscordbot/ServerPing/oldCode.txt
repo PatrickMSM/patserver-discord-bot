@@ -1,0 +1,33 @@
+IOUtil.ReadVarInt(in); // Unnecessary size
+int id = IOUtil.ReadVarInt(in); // Packet type
+
+IOUtil.except(id == -1, "Server prematurely ended stream.");
+IOUtil.except(id != 0x00, "Server returned invalid packet type."); // not status request packet
+
+int length = IOUtil.ReadVarInt(in);
+IOUtil.except(length == -1, "Server prematurely ended stream.");
+IOUtil.except(length == 0, "Server returned unexpected value.");
+
+byte[] data = new byte[length];
+in.readFully(data);
+String json = new String(data, StandardCharsets.UTF_8);
+
+// <OUT> Ping (FINALLY)
+out.writeByte(0x09); // Packet size
+out.writeByte(0x01); // Ping packet
+out.writeLong(System.currentTimeMillis()); // Calculate ping time on server
+
+// <IN> Finally inbound ping packet
+IOUtil.ReadVarInt(in); // unnecessary size again
+id = IOUtil.ReadVarInt(in); // ID
+
+IOUtil.except(id == -1, "Server prematurely ended stream.");
+IOUtil.except(id != 0x01, "Server returned invalid packet type.");
+
+
+
+
+
+
+location:
+after status response

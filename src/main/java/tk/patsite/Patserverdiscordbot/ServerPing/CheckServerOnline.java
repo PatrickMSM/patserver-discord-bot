@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 public final class CheckServerOnline {
@@ -40,37 +39,14 @@ public final class CheckServerOnline {
                 out.writeByte(0x00); // Status request
 
                 // <IN> Status response
-                IOUtil.ReadVarInt(in); // Unnecessary size
-                int id = IOUtil.ReadVarInt(in); // Packet type
-
-                IOUtil.except(id == -1, "Server prematurely ended stream.");
-                IOUtil.except(id != 0x00, "Server returned invalid packet type."); // not status request packet
-
-                int length = IOUtil.ReadVarInt(in);
-                IOUtil.except(length == -1, "Server prematurely ended stream.");
-                IOUtil.except(length == 0, "Server returned unexpected value.");
-
-                byte[] data = new byte[length];
-                in.readFully(data);
-                String json = new String(data, StandardCharsets.UTF_8);
-
-                // <OUT> Ping (FINALLY)
-                out.writeByte(0x09); // Packet size
-                out.writeByte(0x01); // Ping packet
-                out.writeLong(System.currentTimeMillis()); // Calculate ping time on server
-
-                // <IN> Finally inbound ping packet
-                IOUtil.ReadVarInt(in); // unnecessary size again
-                id = IOUtil.ReadVarInt(in); // ID
-
-                IOUtil.except(id == -1, "Server prematurely ended stream.");
-                IOUtil.except(id != 0x01, "Server returned invalid packet type.");
+                in.readByte(); // If this fails to read, the server is offline.
+                               // If this can be read, that means the server is online.
 
                 completableFuture.complete(true);
             }
-        //} catch (IOException ignored) {
+        } catch (IOException ignored) {
             /* ignored */
-        } catch (PingException | IOException e) {
+        } catch (PingException e) {
             e.printStackTrace();
         }
         completableFuture.complete(false);
