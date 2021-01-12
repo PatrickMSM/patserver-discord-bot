@@ -14,14 +14,13 @@ import javax.security.auth.login.LoginException;
 
 public final class Botloader {
 
-    private final UserAuthenticator userAuth = new UserAuthenticator();
-    private final CommandManager commandManager = new CommandManager();
-
 
     public Botloader(final Log log, String token) throws LoginException, InterruptedException {
+        final UserAuthenticator userAuth = new UserAuthenticator();
+        final CommandManager commandManager = new CommandManager();
+
+
         log.info("[WORKING] Loading...");
-
-
 
         final JDA api = JDABuilder.createDefault(token)
                 // Intent so I CAN TRACK MEMBERS

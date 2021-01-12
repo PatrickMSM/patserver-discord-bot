@@ -27,7 +27,8 @@ public class CommandManager {
             "ping", new PingCommand(),
             "botchannel", new BotsCommand(),
             "embed", new EmbedCommand(this),
-            "ghostping", new GhostpingCommand()
+            "ghostping", new GhostpingCommand(),
+            "clear", new ClearCommand()
     );
 
     public final void init() {
@@ -40,6 +41,8 @@ public class CommandManager {
     public final Map<String, Command> getCommands() {
         return commands;
     }
+
+
 
     public void fire(String command, String[] args, Message message) {
         if (commands.containsKey(command)) {
