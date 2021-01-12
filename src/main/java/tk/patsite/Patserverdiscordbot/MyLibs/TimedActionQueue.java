@@ -2,11 +2,11 @@ package tk.patsite.Patserverdiscordbot.MyLibs;
 
 import tk.patsite.Patserverdiscordbot.Settings;
 
-import java.util.PriorityQueue;
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 public final class TimedActionQueue {
-    private final Queue<Runnable> queue = new PriorityQueue<>();
+    private final Queue<Runnable> queue = new ArrayDeque<>();
     private final long ID = Settings.Misc.RANDOM.nextLong(); // random thread ID
     private final Thread thread;
 
