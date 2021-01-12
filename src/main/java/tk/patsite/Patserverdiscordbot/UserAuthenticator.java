@@ -41,17 +41,20 @@ public final class UserAuthenticator {
         return false;
     }
 
+
+    private Message verifMessage;
     private boolean onRoleCheck(Member user) {
         // The user already has the role.
         // Check if he actually has reacted.
 
-        Message verifMessage = user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).getHistory().getMessageById(Settings.AuthSettings.VERIFY_MESSAGE);
+        if (verifMessage == null) {
+            verifMessage = user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveMessageById(Settings.AuthSettings.VERIFY_MESSAGE).complete();
+        }
 
 
         for (MessageReaction reaction : verifMessage.getReactions()) {
             for (User user1 : reaction.retrieveUsers()) {
                 if (user.getUser().getId().equals(user1.getId()))
-                    System.out.println(user.getEffectiveName());
                     return true;
             }
         }
