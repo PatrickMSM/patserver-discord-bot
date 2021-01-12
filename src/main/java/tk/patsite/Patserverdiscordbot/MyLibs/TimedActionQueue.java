@@ -39,6 +39,7 @@ public final class TimedActionQueue {
 
 
         thread = new Thread(action::run, "TimedActionQueueThread-"+ID);
+        stop();
     }
 
 }
