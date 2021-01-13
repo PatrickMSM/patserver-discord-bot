@@ -32,9 +32,6 @@ public final class OnTheFlyCompiler {
             compiledFile = new File(rootDir, "code.class");
             f.complete(true);
         } else {
-            System.out.println(FileUtil.convertToString(new BufferedReader(new InputStreamReader(compileProc.getErrorStream()))));
-            System.out.println(FileUtil.convertToString(new BufferedReader(new InputStreamReader(compileProc.getInputStream()))));
-
             f.complete(false);
         }
         return f;
