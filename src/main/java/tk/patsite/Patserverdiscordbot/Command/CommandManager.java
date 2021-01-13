@@ -55,7 +55,7 @@ public class CommandManager {
             }
             commands.get(command).perform(message, args);
         } else {
-            message.getAuthor().openPrivateChannel().complete().sendMessage("Invalid command `" + PREFIX + command + "`! Type `" + PREFIX + "help` in patserver for help.").queue();
+            message.getAuthor().openPrivateChannel().complete().sendMessage("Invalid command `" + PREFIX + command + "`! Type `" + PREFIX + "help` in "+ Settings.Channels.BOTS_CHANNEL + " for help.").queue();
             message.delete().queue();
         }
     }

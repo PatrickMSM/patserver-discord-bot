@@ -18,28 +18,5 @@ public final class Starter {
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
         }
-
-        /* try {
-            OnTheFlyCompiler compiler = new OnTheFlyCompiler("code", "System.out.println(\"it work!\");");
-            System.out.println("com");
-            compiler.compile().thenAccept(aBoolean -> {
-                System.out.println("compile");
-                if (aBoolean) {
-                    System.out.println("if");
-                    try {
-                        System.out.println("run");
-                        compiler.run().thenAccept(s -> {
-                            System.out.println("end");
-                            System.out.println(s);
-                            System.gc();
-                        });
-                    } catch (IOException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        } */
     }
 }
