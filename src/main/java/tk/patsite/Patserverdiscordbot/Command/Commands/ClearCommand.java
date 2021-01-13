@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import tk.patsite.Patserverdiscordbot.Command.Command;
 import tk.patsite.Patserverdiscordbot.MyLibs.TimedRunnableQueue;
+import tk.patsite.Patserverdiscordbot.Settings;
 import tk.patsite.Patserverdiscordbot.Util.JDAUtil;
 
 public class ClearCommand extends Command {
@@ -15,6 +16,8 @@ public class ClearCommand extends Command {
     public String getDescription() {
         return null;
     }
+
+    private static final byte AMOUNT = 100;
 
     @Override
     public void perform(Message message, String[] args) {
@@ -35,8 +38,7 @@ public class ClearCommand extends Command {
             message.delete().queue();
         }
 
-        MessageChannel chan = message.getChannel();
-
+        final MessageChannel chan = message.getChannel();
 
 
         if (msgToDelete > 0) {
@@ -44,13 +46,25 @@ public class ClearCommand extends Command {
                 for (long i = 0L; i < msgToDelete / 100L; i++) {
                     // Enqueue message delete
                     bulkDeleteQueue.add(() -> {
-                        JDAUtil.bulkDeleteMessages(chan, 100);
+                        JDAUtil.bulkDeleteMessages(chan, AMOUNT);
                     });
                 }
             }
-            JDAUtil.bulkDeleteMessages(chan,100);
+            JDAUtil.bulkDeleteMessages(chan, (byte) (msgToDelete%100));
         }
 
+
+        message.delete().queue();
+
+        new Thread(()->{
+            Message message1 = chan.sendMessage("Deleted " + (msgToDelete + 1L) + " messages \\;) !").complete();
+
+            // Wait seconds
+            try {Thread.sleep(1200);
+            } catch (InterruptedException e) {e.printStackTrace();}
+
+            message1.delete().queue();
+        }, "BulkDeleteThread-"+ Settings.Misc.RANDOM.nextInt(99)).start();
 
 
     }
