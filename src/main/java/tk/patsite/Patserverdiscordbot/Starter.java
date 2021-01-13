@@ -18,5 +18,9 @@ public final class Starter {
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        OnTheFlyCompiler compiler = new OnTheFlyCompiler("testapp", "class X{"  + Settings.NEWLINE +
+                                                                                 "public static void main(String[] args) {" + Settings.NEWLINE +
+                                                                                 "System.out.println(\"it work!\")}}");
     }
 }
