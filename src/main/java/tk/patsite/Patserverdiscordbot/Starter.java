@@ -27,7 +27,10 @@ public final class Starter {
             compiler.compile().thenAccept(aBoolean -> {
                 if (aBoolean) {
                     try {
-                        compiler.run();
+                        compiler.run().thenAccept(s -> {
+                            System.out.println(s);
+                            System.gc();
+                        });
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
