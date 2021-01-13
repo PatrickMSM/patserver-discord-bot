@@ -13,10 +13,12 @@ public final class OnTheFlyCompiler {
     private final File uncompiledFile, rootDir;
     private File compiledFile;
 
-    public OnTheFlyCompiler(final String name, final String content) {
+    public OnTheFlyCompiler(final String name, final String content) throws IOException {
         long tempId = RAND.nextLong();
         rootDir = new File(System.getProperty("java.io.tmpdir"), name + tempId);
+        rootDir.mkdirs();
         uncompiledFile = new File(rootDir, "code.java");
+        uncompiledFile.createNewFile();
         FileUtil.write(uncompiledFile, content);
     }
 
