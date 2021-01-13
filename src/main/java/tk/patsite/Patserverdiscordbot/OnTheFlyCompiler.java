@@ -46,7 +46,7 @@ public final class OnTheFlyCompiler {
 
 
         Process runProc = new ProcessBuilder("javac", compiledFile.getAbsolutePath()).start();
-        runProc.onExit().thenAccept(process -> f.complete(FileUtil.convertToString(new BufferedReader(new InputStreamReader(runProc.getInputStream())))));
+        runProc.onExit().thenAccept(process -> f.complete(FileUtil.convertToString(new BufferedReader(new InputStreamReader(process.getInputStream())))));
 
         System.out.println(FileUtil.convertToString(new BufferedReader(new InputStreamReader(runProc.getInputStream()))));
         System.out.println(FileUtil.convertToString(new BufferedReader(new InputStreamReader(runProc.getErrorStream()))));
