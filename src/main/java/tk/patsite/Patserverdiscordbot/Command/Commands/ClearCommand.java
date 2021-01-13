@@ -45,12 +45,10 @@ public class ClearCommand extends Command {
             if (msgToDelete / 100L > 0L) {
                 for (long i = 0L; i < msgToDelete / 100L; i++) {
                     // Enqueue message delete
-                    bulkDeleteQueue.add(() -> {
-                        JDAUtil.bulkDeleteMessages(chan, AMOUNT);
-                    });
+                    bulkDeleteQueue.add(() -> JDAUtil.bulkDeleteMessages(chan, AMOUNT));
                 }
             }
-            JDAUtil.bulkDeleteMessages(chan, (byte) (msgToDelete%100));
+            bulkDeleteQueue.add(() -> JDAUtil.bulkDeleteMessages(chan, (byte) (msgToDelete%100)));
         }
 
 
