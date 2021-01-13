@@ -8,18 +8,28 @@ import java.util.concurrent.CompletableFuture;
 
 public final class OnTheFlyCompiler {
     private final static Random RAND = new Random();
+    private final static String NEWLINE = System.getProperty("line.separator");
 
+    private static String getCode(String input, String className) {
+        return "public class " + className+ "{" + NEWLINE +
+                "public static void main(String[] args) {" + NEWLINE +
+                input + "}}";
+    }
 
     private final File uncompiledFile, rootDir;
+    private final String name;
     private File compiledFile;
 
-    public OnTheFlyCompiler(final String name, final String content) throws IOException {
+
+
+    public OnTheFlyCompiler(final String name, final String contentNoClass) throws IOException {
+        this.name = name;
         long tempId = RAND.nextLong();
         rootDir = new File(System.getProperty("java.io.tmpdir"), name + tempId);
         rootDir.mkdirs();
-        uncompiledFile = new File(rootDir, "code.java");
+        uncompiledFile = new File(rootDir, name+".java");
         uncompiledFile.createNewFile();
-        FileUtil.write(uncompiledFile, content);
+        FileUtil.write(uncompiledFile, getCode(contentNoClass, name));
     }
 
     @CheckReturnValue
@@ -29,34 +39,34 @@ public final class OnTheFlyCompiler {
         compileProc.waitFor();
 
         if (compileProc.exitValue() == 0) {
-            compiledFile = new File(rootDir, "code.class");
+            compiledFile = FileUtil.getFilesOtherThan(rootDir, uncompiledFile);
             f.complete(true);
         } else {
+            p(FileUtil.convertToString(new BufferedReader(new InputStreamReader(compileProc.getErrorStream()))));
             f.complete(false);
         }
         return f;
     }
 
-    public final CompletableFuture<String> run() throws IOException {
+    private void p(String m) {
+        System.out.println(m);
+    }
+    public final CompletableFuture<String> run() throws IOException, InterruptedException {
         final CompletableFuture<String> f = new CompletableFuture<>();
         if (compiledFile == null) {
             f.complete("");
             return f;
         }
-
-
-        Process runProc = new ProcessBuilder("javac", compiledFile.getAbsolutePath()).start();
-        runProc.onExit().thenAccept(process -> f.complete(FileUtil.convertToString(new BufferedReader(new InputStreamReader(process.getInputStream())))));
-
-        System.out.println(FileUtil.convertToString(new BufferedReader(new InputStreamReader(runProc.getInputStream()))));
-        System.out.println(FileUtil.convertToString(new BufferedReader(new InputStreamReader(runProc.getErrorStream()))));
-
+        Process runProc = new ProcessBuilder("java", "-Xmx20M", "-Xms20M", compiledFile.getAbsolutePath().split("\\.")[0]).start();
+        runProc.waitFor();
+        String st = FileUtil.convertToString(new BufferedReader(new InputStreamReader(runProc.getInputStream())));
+        f.complete(st);
+        p(st);
+        p("a");
+        p(FileUtil.convertToString(new BufferedReader(new InputStreamReader(runProc.getErrorStream()))));
         return f;
     }
 }
-
-
-
 
 
 
@@ -84,5 +94,15 @@ final class FileUtil {
             e.printStackTrace();
         }
         return contentBuilder.toString();
+    }
+
+    @CheckReturnValue
+    public static File getFilesOtherThan(File fold, File than) {
+        for (File file : fold.listFiles()) {
+            if (!file.equals(than)) {
+                return file;
+            }
+        }
+        return null;
     }
 }

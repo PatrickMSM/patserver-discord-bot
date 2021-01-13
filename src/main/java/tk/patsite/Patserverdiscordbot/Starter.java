@@ -3,7 +3,6 @@ package tk.patsite.Patserverdiscordbot;
 import tk.patsite.Patserverdiscordbot.MyLibs.Log;
 
 import javax.security.auth.login.LoginException;
-import java.io.IOException;
 
 
 public final class Starter {
@@ -20,10 +19,8 @@ public final class Starter {
             e.printStackTrace();
         }
 
-        try {
-            OnTheFlyCompiler compiler = new OnTheFlyCompiler("testapp", "class X{"  + Settings.NEWLINE +
-                    "public static void main(String[] args) {" + Settings.NEWLINE +
-                    "System.out.println(\"it work!\");}}");
+        /* try {
+            OnTheFlyCompiler compiler = new OnTheFlyCompiler("code", "System.out.println(\"it work!\");");
             System.out.println("com");
             compiler.compile().thenAccept(aBoolean -> {
                 System.out.println("compile");
@@ -36,13 +33,13 @@ public final class Starter {
                             System.out.println(s);
                             System.gc();
                         });
-                    } catch (IOException e) {
+                    } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             });
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-        }
+        } */
     }
 }
