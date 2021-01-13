@@ -24,10 +24,15 @@ public final class Starter {
             OnTheFlyCompiler compiler = new OnTheFlyCompiler("testapp", "class X{"  + Settings.NEWLINE +
                     "public static void main(String[] args) {" + Settings.NEWLINE +
                     "System.out.println(\"it work!\")}}");
+            System.out.println("com");
             compiler.compile().thenAccept(aBoolean -> {
+                System.out.println("compile");
                 if (aBoolean) {
+                    System.out.println("if");
                     try {
+                        System.out.println("run");
                         compiler.run().thenAccept(s -> {
+                            System.out.println("end");
                             System.out.println(s);
                             System.gc();
                         });
