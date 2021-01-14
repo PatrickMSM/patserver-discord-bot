@@ -44,7 +44,6 @@ public class PurgeCommand extends Command {
                 String m = text.replace("\\{mention}", member.getAsMention());
                 member.getUser().openPrivateChannel().complete().sendMessage(m).queue();
                 member.kick(m).queue();
-                continue;
             }
         }
     }
