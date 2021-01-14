@@ -33,13 +33,14 @@ public class CommandEvent extends ListenerAdapter {
         final String rawCommand = message.replaceFirst(Settings.Misc.PREFIX, "");
 
         // Get the main command
-        final String command = rawCommand.split(" ")[0];
+        final String command = rawCommand.split(" ")[0].toLowerCase();
 
         // Get the args
         String[] args = rawCommand.split(" ");
 
         // Drop the command itself
         args = Arrays.copyOfRange(args, 1, args.length);
+
 
         // Call the command manager
         man.fire(command, args, event.getMessage());

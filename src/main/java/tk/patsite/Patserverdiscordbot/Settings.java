@@ -19,6 +19,8 @@ public final class Settings {
         public static final String PATRICK_ID = "300559445988081664";
         public static final Random RANDOM = new Random();
         public static final String GUILD_ID = "768515187988103169";
+        public static final String JOIN_LINK = "https://discord.patsite.tk/";
+        public static final String ROLE_PURGE_MESSAGE = "{mention}, {purger} mass purged everyone with the role {role}. To rejoin, use link " + JOIN_LINK;
     }
 
     public static final String NEWLINE = System.getProperty("line.separator");

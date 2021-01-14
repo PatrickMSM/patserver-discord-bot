@@ -8,6 +8,7 @@ import tk.patsite.Patserverdiscordbot.Settings;
 import java.util.Map;
 import java.util.Objects;
 
+import static java.util.Map.entry;
 import static tk.patsite.Patserverdiscordbot.Settings.Misc.PREFIX;
 
 public class CommandManager {
@@ -19,16 +20,17 @@ public class CommandManager {
         status = new StatusCommand();
     }
 
-    private final Map<String, Command> commands = Map.of(
-            "ip", new IpCommand(),
-            "status", status,
-            "rules", new RulesCommand(),
-            "help", new HelpCommand(),
-            "ping", new PingCommand(),
-            "botchannel", new BotsCommand(),
-            "embed", new EmbedCommand(this),
-            "ghostping", new GhostpingCommand(),
-            "clear", new ClearCommand()
+    private final Map<String, Command> commands = Map.ofEntries(
+            entry("ip", new IpCommand()),
+            entry("status", status),
+            entry("rules", new RulesCommand()),
+            entry("help", new HelpCommand()),
+            entry("ping", new PingCommand()),
+            entry("botchannel", new BotsCommand()),
+            entry("embed", new EmbedCommand(this)),
+            entry("ghostping", new GhostpingCommand()),
+            entry("clear", new ClearCommand()),
+            entry("purge", new PurgeCommand())
     );
 
     public final void init() {

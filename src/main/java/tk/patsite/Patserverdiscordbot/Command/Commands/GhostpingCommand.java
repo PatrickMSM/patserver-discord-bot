@@ -13,6 +13,7 @@ public class GhostpingCommand extends Command {
 
 
         if (args.length < 1) {
+            message.getAuthor().openPrivateChannel().complete().sendMessage("No arguments!").queue();
             message.delete().queue();
             return;
         }
