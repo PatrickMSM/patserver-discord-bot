@@ -39,14 +39,12 @@ public class PurgeCommand extends Command {
                 .replace("\\{name}", message.getAuthor().getName())
                 .replace("\\{role}", roleToPurge.getName());
 
-        ol:for (Member member : message.getGuild().getMembers()) {
-            for (Role role :  member.getRoles()) {
-                if (roleToPurge.equals(role)) {
-                    String m = text.replace("\\{mention}", member.getAsMention());
-                    member.getUser().openPrivateChannel().complete().sendMessage(m).queue();
-                    member.kick(m).queue();
-                    continue ol;
-                }
+        for (Member member : message.getGuild().getMembers()) {
+            if (member.getRoles().stream().anyMatch(roleToPurge::equals)) {
+                String m = text.replace("\\{mention}", member.getAsMention());
+                member.getUser().openPrivateChannel().complete().sendMessage(m).queue();
+                member.kick(m).queue();
+                continue;
             }
         }
     }
