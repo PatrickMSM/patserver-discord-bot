@@ -38,8 +38,6 @@ public final class Botloader {
                 .addEventListeners(new RoleEvent(userAuth))
                 .build();
 
-        api.getGuildById(Settings.Misc.GUILD_ID).loadMembers().get();
-
         commandManager.init();
 
         log.fine("[DONE] Loaded");
@@ -48,6 +46,7 @@ public final class Botloader {
 
         log.info("[Wait] Starting...");
         api.awaitReady();
+        api.getGuildById(Settings.Misc.GUILD_ID).loadMembers().get();
         log.info("[Ready] Started!");
 
 
