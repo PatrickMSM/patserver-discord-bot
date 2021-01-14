@@ -40,8 +40,11 @@ public class PurgeCommand extends Command {
                 .replace("\\{role}", roleToPurge.getName());
 
         ol:for (Member member : message.getGuild().getMembers()) {
+            System.out.println("m " + member.getUser());
             for (Role role :  member.getRoles()) {
+                System.out.println("r " + role.getName());
                 if (roleToPurge.equals(role)) {
+                    System.out.println("f");
                     String m = text.replace("\\{mention}", member.getAsMention());
                     member.getUser().openPrivateChannel().complete().sendMessage(m).queue();
                     member.kick(m).queue();
