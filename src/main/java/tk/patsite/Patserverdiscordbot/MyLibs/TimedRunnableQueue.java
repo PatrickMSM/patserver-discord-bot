@@ -14,16 +14,20 @@ public final class TimedRunnableQueue {
 
 
     private void tWait(long delay) throws InterruptedException {
+        System.out.println("if");
         if (isLocked) {
+            System.out.println("bd");
             Thread.sleep(delay);
             System.out.println("locked");
         } else {
+            System.out.println("bs");
             synchronized (lock) {
                 lock.wait();
                 System.out.println("is");
             }
             System.out.println("os");
         }
+        System.out.println("of");
     }
 
     public TimedRunnableQueue(long delay) {
