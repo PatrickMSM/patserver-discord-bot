@@ -4,17 +4,18 @@ import tk.patsite.Patserverdiscordbot.Settings;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 final class Lock{}
 
 public final class TimedRunnableQueue {
     private final Queue<Runnable> queue = new ArrayDeque<>();
     private final Lock lock = new Lock();
-    private boolean isLocked = false;
+    private AtomicBoolean isLocked = new AtomicBoolean(false);
 
 
     private void tWait(long delay) throws InterruptedException {
-        if (!isLocked) {
+        if (!isLocked.get()) {
             Thread.sleep(delay);
         } else {
             synchronized (lock) {
@@ -41,7 +42,7 @@ public final class TimedRunnableQueue {
                 if (r != null) {
                     r.run();
                 } else {
-                    isLocked = true;
+                    isLocked.set(true);
                 }
             }
         }, "TimedActionQueueThread-" + ID);
@@ -51,8 +52,8 @@ public final class TimedRunnableQueue {
 
     public void add(Runnable runnable) {
         queue.add(runnable);
-        if (isLocked) {
-            isLocked = false;
+        if (isLocked.get()) {
+            isLocked.set(false);
             lock.notify();
         }
     }

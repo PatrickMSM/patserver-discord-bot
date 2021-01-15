@@ -23,6 +23,11 @@ public final class Starter {
         TimedRunnableQueue q = new TimedRunnableQueue(1000);
         q.add(()->{System.out.println(System.currentTimeMillis());});
         q.add(()->{System.out.println(System.currentTimeMillis());});
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         q.add(()->{System.out.println(System.currentTimeMillis());});
     }
 }
