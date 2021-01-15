@@ -32,18 +32,22 @@ public final class TimedRunnableQueue {
 
 
         final Thread thread = new Thread(() -> {
+            System.out.println("th");
             while (true) {
+                System.out.println("whtrue");
                 try {
                     tWait(delay);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                System.out.println("twait");
 
 
                 Runnable r = queue.poll();
                 if (r != null) {
                     r.run();
                 } else {
+                    System.out.println("locked");
                     isLocked = true;
                 }
             }
