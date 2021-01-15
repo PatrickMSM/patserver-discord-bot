@@ -11,7 +11,7 @@ final class Lock{}
 public final class TimedRunnableQueue {
     private final Queue<Runnable> queue = new ArrayDeque<>();
     private final Lock lock = new Lock();
-    private AtomicBoolean isLocked = new AtomicBoolean(false);
+    private final AtomicBoolean isLocked = new AtomicBoolean(false);
 
 
     private void tWait(long delay) throws InterruptedException {
