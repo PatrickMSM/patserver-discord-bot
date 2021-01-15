@@ -14,8 +14,7 @@ public final class TimedRunnableQueue {
 
 
     private void tWait(long delay) throws InterruptedException {
-        System.out.println("if");
-        if (isLocked) {
+        if (!isLocked) {
             Thread.sleep(delay);
         } else {
             synchronized (lock) {
