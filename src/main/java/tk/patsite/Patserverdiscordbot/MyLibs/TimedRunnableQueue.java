@@ -16,10 +16,13 @@ public final class TimedRunnableQueue {
     private void tWait(long delay) throws InterruptedException {
         if (isLocked) {
             Thread.sleep(delay);
+            System.out.println("locked");
         } else {
             synchronized (lock) {
                 lock.wait();
+                System.out.println("is");
             }
+            System.out.println("os");
         }
     }
 
@@ -51,7 +54,9 @@ public final class TimedRunnableQueue {
 
     public void add(Runnable runnable) {
         queue.add(runnable);
+        System.out.println(isLocked);
         if (isLocked) {
+            System.out.println("lo");
             isLocked = false;
             lock.notify();
         }
