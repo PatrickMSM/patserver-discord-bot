@@ -10,24 +10,18 @@ final class Lock{}
 public final class TimedRunnableQueue {
     private final Queue<Runnable> queue = new ArrayDeque<>();
     private final Lock lock = new Lock();
-    private boolean isLocked;
+    private boolean isLocked = false;
 
 
     private void tWait(long delay) throws InterruptedException {
         System.out.println("if");
         if (isLocked) {
-            System.out.println("bd");
             Thread.sleep(delay);
-            System.out.println("locked");
         } else {
-            System.out.println("bs");
             synchronized (lock) {
                 lock.wait();
-                System.out.println("is");
             }
-            System.out.println("os");
         }
-        System.out.println("of");
     }
 
     public TimedRunnableQueue(long delay) {
@@ -36,22 +30,18 @@ public final class TimedRunnableQueue {
 
 
         final Thread thread = new Thread(() -> {
-            System.out.println("th");
             while (true) {
-                System.out.println("whtrue");
                 try {
                     tWait(delay);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("twait");
 
 
                 Runnable r = queue.poll();
                 if (r != null) {
                     r.run();
                 } else {
-                    System.out.println("locked");
                     isLocked = true;
                 }
             }
@@ -62,9 +52,7 @@ public final class TimedRunnableQueue {
 
     public void add(Runnable runnable) {
         queue.add(runnable);
-        System.out.println(isLocked);
         if (isLocked) {
-            System.out.println("lo");
             isLocked = false;
             lock.notify();
         }
