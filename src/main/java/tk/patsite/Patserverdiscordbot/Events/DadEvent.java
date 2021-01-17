@@ -3,32 +3,32 @@ package tk.patsite.Patserverdiscordbot.Events;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.util.regex.Pattern;
-
 public class DadEvent extends ListenerAdapter {
 
-    private final Pattern DadPattern = Pattern.compile("(im|i'm|i am)*");
-    private final Pattern DadPatternIm = Pattern.compile("(im|i'm|i am)");
+    private String getT(String str, String conds, String condDelimiter) {
+        final String[] checks = conds.split(condDelimiter);
+
+        for (String check : checks) {
+            String test = str.substring(str.lastIndexOf(check) + 1);
+            if (!test.equals(str)) {
+                return test;
+            }
+        }
+        return null;
+    }
 
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
         if (event.getAuthor().isBot())
             return;
 
-        String message = event.getMessage().getContentRaw().trim();
+        final String message, result;
+        message = event.getMessage().getContentRaw().trim();
+        result = getT(message, "im|i'm|i am", "|");
 
-        if (!DadPatternIm.matcher(message).matches()) // check if the message has im
+        if (result == null)
             return;
 
-        event.getMessage().reply(message).queue();
-
-
-        /*
-        final Matcher match = DadPattern.matcher(message);
-        if (!match.matches())
-            return;
-        message = match.group(0).replace(DadPatternIm, "");
-
-        event.getMessage().reply("Hey " + message + ", im dad!").queue(); */
+        event.getMessage().reply("Hey " + result + ", im dad!").queue();
     }
 }
