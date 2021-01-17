@@ -24,6 +24,6 @@ public class DadEvent extends ListenerAdapter {
         final Matcher matcher = dadtern.matcher(message);
 
 
-        event.getMessage().reply("Hey " + matcher.group(3) + ", im dad!").queue();
+        event.getMessage().reply("Hey " + matcher.group(2) + ", im dad!").queue();
     }
 }
