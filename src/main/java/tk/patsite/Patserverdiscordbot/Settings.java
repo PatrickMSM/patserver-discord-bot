@@ -1,5 +1,6 @@
 package tk.patsite.Patserverdiscordbot;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 public final class Settings {
@@ -17,23 +18,40 @@ public final class Settings {
         public static final String IP = "play.patsite.tk";
         public static final String PREFIX = "p!";
         public static final String PATRICK_ID = "300559445988081664";
-        public static final Random RANDOM = new Random();
+        public static final Random RANDOM = new SecureRandom();
         public static final String GUILD_ID = "768515187988103169";
         public static final String JOIN_LINK = "https://discord.patsite.tk/";
         public static final String ROLE_PURGE_MESSAGE = "{mention}, {purger} mass purged everyone with the role {role}. To rejoin, use link " + JOIN_LINK;
+        public static final int MESSAGE_REACTION_CHANCE = 20; // one in 20
+
     }
+
+    public static final class NonSettings{
+        static final String[] WELCOME_MESSAGES = new String[]{
+                "{user} just joined!", "{user} slid into the server",
+                "Welcome {user}! We hope you have a great time!",
+                "{user} joined the game."
+        };
+        public static final String[] RANDOM_REACTS = new String[] {
+                "🤔"
+        };
+    }
+
+
+
+    public static String RANDOM_WELCOME() {
+        return NonSettings.WELCOME_MESSAGES[Misc.RANDOM.nextInt(NonSettings.WELCOME_MESSAGES.length)];
+    }
+    public static String RANDOM_REACT() {
+        return NonSettings.RANDOM_REACTS[Misc.RANDOM.nextInt(NonSettings.RANDOM_REACTS.length)]; // looks fine lol
+    }
+
+
+
+
+
 
     public static final String NEWLINE = System.getProperty("line.separator");
-
-    private static final String[] WELCOME_MESSAGES = new String[]{
-            "{user} just joined!", "{user} slid into the server",
-            "Welcome {user}! We hope you have a great time!",
-            "{user} joined the game."
-    }; public static String RANDOM_WELCOME() {
-        return WELCOME_MESSAGES[Misc.RANDOM.nextInt(WELCOME_MESSAGES.length)];
-    }
-
-
 
     // Auth settings
     public static final class AuthSettings{
