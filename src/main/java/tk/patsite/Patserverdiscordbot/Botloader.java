@@ -5,10 +5,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import tk.patsite.Patserverdiscordbot.Command.CommandManager;
-import tk.patsite.Patserverdiscordbot.Events.CommandEvent;
-import tk.patsite.Patserverdiscordbot.Events.MemberJoinEvent;
-import tk.patsite.Patserverdiscordbot.Events.ReactionEvent;
-import tk.patsite.Patserverdiscordbot.Events.RoleEvent;
+import tk.patsite.Patserverdiscordbot.Events.*;
 import tk.patsite.Patserverdiscordbot.MyLibs.Log;
 
 import javax.security.auth.login.LoginException;
@@ -36,6 +33,7 @@ public final class Botloader {
                 .addEventListeners(new MemberJoinEvent())
                 .addEventListeners(new ReactionEvent(userAuth))
                 .addEventListeners(new RoleEvent(userAuth))
+                .addEventListeners(new DadEvent())
                 .build();
 
         commandManager.init();
