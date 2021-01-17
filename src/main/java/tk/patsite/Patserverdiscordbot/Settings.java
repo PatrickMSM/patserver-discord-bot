@@ -18,11 +18,12 @@ public final class Settings {
         public static final String IP = "play.patsite.tk";
         public static final String PREFIX = "p!";
         public static final String PATRICK_ID = "300559445988081664";
-        public static final Random RANDOM = new SecureRandom();
+
         public static final String GUILD_ID = "768515187988103169";
         public static final String JOIN_LINK = "https://discord.patsite.tk/";
         public static final String ROLE_PURGE_MESSAGE = "{mention}, {purger} mass purged everyone with the role {role}. To rejoin, use link " + JOIN_LINK;
         public static final int MESSAGE_REACTION_CHANCE = 20; // one in 20
+
 
     }
 
@@ -35,15 +36,16 @@ public final class Settings {
         public static final String[] RANDOM_REACTS = new String[] {
                 "🤔"
         };
+        public static final Random RANDOM = new SecureRandom();
     }
 
 
 
     public static String RANDOM_WELCOME() {
-        return NonSettings.WELCOME_MESSAGES[Misc.RANDOM.nextInt(NonSettings.WELCOME_MESSAGES.length)];
+        return NonSettings.WELCOME_MESSAGES[NonSettings.RANDOM.nextInt(NonSettings.WELCOME_MESSAGES.length)];
     }
     public static String RANDOM_REACT() {
-        return NonSettings.RANDOM_REACTS[Misc.RANDOM.nextInt(NonSettings.RANDOM_REACTS.length)]; // looks fine lol
+        return NonSettings.RANDOM_REACTS[NonSettings.RANDOM.nextInt(NonSettings.RANDOM_REACTS.length)]; // looks fine lol
     }
 
 

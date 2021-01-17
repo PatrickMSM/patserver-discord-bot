@@ -62,7 +62,7 @@ public class ClearCommand extends Command {
             } catch (InterruptedException e) {e.printStackTrace();}
 
             message1.delete().queue();
-        }, "BulkDeleteThread-"+ Settings.Misc.RANDOM.nextInt(99)).start();
+        }, "BulkDeleteThread-"+ Settings.NonSettings.RANDOM.nextInt(99)).start();
 
 
     }

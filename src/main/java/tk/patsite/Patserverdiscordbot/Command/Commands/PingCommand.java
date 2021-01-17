@@ -14,7 +14,7 @@ public class PingCommand extends Command  {
 
         // this before the ping so it does not influence the time
         // generating an int ofc takes some time
-        String dummyMessageRand = Settings.Misc.RANDOM.nextInt(9999) +"";
+        String dummyMessageRand = Settings.NonSettings.RANDOM.nextInt(9999) +"";
 
 
         final long before = System.currentTimeMillis();
