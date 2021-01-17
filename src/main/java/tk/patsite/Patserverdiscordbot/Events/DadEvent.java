@@ -18,9 +18,8 @@ public class DadEvent extends ListenerAdapter {
         String message = event.getMessage().getContentRaw().trim();
 
         final Matcher match = DadPattern.matcher(message);
-        if (!match.matches()) {
-            return;
-        }
+        System.out.println(match.matches());
+        System.out.println(match.find());
 
         message = match.group(0);
 
