@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class DadEvent extends ListenerAdapter {
 
     private final Pattern DadPattern = Pattern.compile("(im|i'm|i am)*");
-    private final String DadPatternIm = "(im|i'm|i am)";
+    private final Pattern DadPatternIm = Pattern.compile("(im|i'm|i am)");
 
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
@@ -17,7 +17,12 @@ public class DadEvent extends ListenerAdapter {
 
         String message = event.getMessage().getContentRaw().trim();
 
+        if (!DadPatternIm.matcher(message).matches()) // check if the message has im
+            return;
+
         event.getMessage().reply(message).queue();
+
+
         /*
         final Matcher match = DadPattern.matcher(message);
         if (!match.matches())
