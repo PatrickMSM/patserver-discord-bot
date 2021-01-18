@@ -6,11 +6,10 @@ import javax.security.auth.login.LoginException;
 
 
 public final class Starter {
-
     public static void main(String[] args) {
 
         // Get token
-        String token = System.getenv("BOT_TOKEN");
+        final String token = System.getenv("BOT_TOKEN");
 
         // Launch
         try {
