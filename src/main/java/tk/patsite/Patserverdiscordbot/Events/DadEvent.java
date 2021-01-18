@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class DadEvent extends ListenerAdapter {
 
 
-    Pattern dadtern = Pattern.compile("^(.*)(im|i'm|i am|am|iam) (.*)$", Pattern.CASE_INSENSITIVE);
+    Pattern dadtern = Pattern.compile("^(.*)(im|i'm|i am|am|iam) (.*)", Pattern.CASE_INSENSITIVE);
 
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
@@ -21,7 +21,7 @@ public class DadEvent extends ListenerAdapter {
 
         final Matcher matcher = dadtern.matcher(message);
 
-        if (matcher.matches())
+        if (!matcher.matches())
             return;
 
 
