@@ -46,10 +46,10 @@ public final class UserAuthenticator {
 
 
 
-    private static boolean checkCache(User user) {
+    private static boolean checkCache(Member user) {
         return VERIFIED_CACHE.contains(user.getId());
     }
-    private static void setCache(User user) {
+    private static void setCache(Member user) {
         VERIFIED_CACHE.add(user.getId());
     }
 
@@ -61,7 +61,7 @@ public final class UserAuthenticator {
             // check the role
             for (Role role : user.getRoles()) {
                 if (Settings.AuthSettings.PAUTH_ROLE == role.getIdLong()) {
-                    setCache(user.getUser());
+                    setCache(user);
                     future.complete(true);
                     return;
                 }
@@ -75,9 +75,16 @@ public final class UserAuthenticator {
     private CompletableFuture<Boolean> onReactCheck(Member user) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         executor.execute(() -> {
+            // Check cache
+            if (checkCache(user)) {
+                future.complete(true);
+                return;
+            }
+
             // Check if the user reacted to the correct message
             for (User user1 : user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveReactionUsersById(VERIFY_MESSAGE,VERIFY_EMOJI)) {
                 if (!user1.getId().equals(user.getId())) {
+                    setCache(user);
                     future.complete(false);
                     return;
                 }
@@ -89,6 +96,7 @@ public final class UserAuthenticator {
 
             for(Role role : user.getRoles()) {
                 if (role.getIdLong() == Settings.AuthSettings.PAUTH_ROLE) {
+                    setCache(user);
                     future.complete(true);
                     return;
                 }
@@ -102,11 +110,17 @@ public final class UserAuthenticator {
     private CompletableFuture<Boolean> onRoleCheck(Member user, List<Role> roles) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         executor.execute(() -> {
-            // Check if the user got the correct role.
+            // Check cache
+            if (checkCache(user)) {
+                future.complete(true);
+                return;
+            }
 
 
+            // Check if the user got the correct role
             for (Role role2 : roles) {
                 if (Settings.AuthSettings.PAUTH_ROLE != role2.getIdLong()) {
+                    setCache(user);
                     future.complete(false);
                     return;
                 }
@@ -119,6 +133,7 @@ public final class UserAuthenticator {
 
             for (User user1 : user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveReactionUsersById(VERIFY_MESSAGE, VERIFY_EMOJI)) {
                 if (user.getUser().getId().equals(user1.getId())) {
+                    setCache(user);
                     future.complete(true);
                     return;
                 }
