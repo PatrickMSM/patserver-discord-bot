@@ -2,20 +2,33 @@ package tk.patsite.Patserverdiscordbot;
 
 import net.dv8tion.jda.api.entities.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+
+import static tk.patsite.Patserverdiscordbot.Settings.AuthSettings.VERIFY_EMOJI;
+import static tk.patsite.Patserverdiscordbot.Settings.AuthSettings.VERIFY_MESSAGE;
+import static tk.patsite.Patserverdiscordbot.Settings.NonSettings.executor;
+
 
 public final class UserAuthenticator {
-    public final void reactAuth(Member user, MessageReaction reaction) {
-        if (onReactCheck(user, reaction)) {
-             accept(user);
-        }
-    }
-    public final void roleAuth(Member user, List<Role> roles) {
-        if (onRoleCheck(user, roles)) {
-            accept(user);
-        }
+
+    private static final Set<String> VERIFIED_CACHE = new HashSet<>();
+
+    public final void reactAuth(Member user) {
+        onReactCheck(user).thenAccept(correct -> {
+            if (correct)
+                accept(user);
+        });
     }
 
+    public final void roleAuth(Member user, List<Role> roles) {
+       onRoleCheck(user, roles).thenAccept(correct -> {
+           if (correct)
+               accept(user);
+       });
+    }
 
 
 
@@ -30,58 +43,89 @@ public final class UserAuthenticator {
 
 
 
-    private Message verifMessage;
-    private boolean onReactCheck(Member user, MessageReaction reaction) {
-        if (verifMessage == null) {
-            verifMessage = user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveMessageById(Settings.AuthSettings.VERIFY_MESSAGE).complete();
-        }
-        // Check if the user reacted to the correct message
-        for (MessageReaction reaction2 : verifMessage.getReactions()) {
-            if (!reaction.equals(reaction2)) {
-                return false;
-            }
-        }
 
 
-        // The user already reacted.
-        // Check if he actually has the role,
 
-        for(Role role : user.getRoles()) {
-            if (role.getId().equals(Settings.AuthSettings.PAUTH_ROLE)) {
-                return true;
-            }
-        }
-        return false;
+    private static boolean checkCache(User user) {
+        return VERIFIED_CACHE.contains(user.getId());
+    }
+    private static void setCache(User user) {
+        VERIFIED_CACHE.add(user.getId());
     }
 
 
 
-    private boolean onRoleCheck(Member user, List<Role> roles) {
-        if (verifMessage == null) {
-            verifMessage = user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveMessageById(Settings.AuthSettings.VERIFY_MESSAGE).complete();
-        }
-        // Check if the user got the correct role.
-
-
-        for(Role role2 : roles) {
-            if (!user.getGuild().getRoleById(Settings.AuthSettings.PAUTH_ROLE).getId().equals(role2.getId())) {
-                return false;
+    public final CompletableFuture<Boolean> gotPauthRole(Member user) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            // check the role
+            for (Role role : user.getRoles()) {
+                if (Settings.AuthSettings.PAUTH_ROLE == role.getIdLong()) {
+                    setCache(user.getUser());
+                    future.complete(true);
+                    return;
+                }
             }
-        }
 
-
-        // The user already has the role.
-        // Check if he actually has reacted.
-
-
-        for (MessageReaction reaction : verifMessage.getReactions()) {
-            for (User user1 : reaction.retrieveUsers()) {
-                if (user.getUser().getId().equals(user1.getId()))
-                    return true;
-            }
-        }
-
-        return false;
+            future.complete(false);
+        });
+        return future;
     }
 
+    private CompletableFuture<Boolean> onReactCheck(Member user) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            // Check if the user reacted to the correct message
+            for (User user1 : user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveReactionUsersById(VERIFY_MESSAGE,VERIFY_EMOJI)) {
+                if (!user1.getId().equals(user.getId())) {
+                    future.complete(false);
+                    return;
+                }
+            }
+
+
+            // The user already reacted.
+            // Check if he actually has the role,
+
+            for(Role role : user.getRoles()) {
+                if (role.getIdLong() == Settings.AuthSettings.PAUTH_ROLE) {
+                    future.complete(true);
+                    return;
+                }
+            }
+            future.complete(false);
+        });
+        return future;
+    }
+
+
+    private CompletableFuture<Boolean> onRoleCheck(Member user, List<Role> roles) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        executor.execute(() -> {
+            // Check if the user got the correct role.
+
+
+            for (Role role2 : roles) {
+                if (Settings.AuthSettings.PAUTH_ROLE != role2.getIdLong()) {
+                    future.complete(false);
+                    return;
+                }
+            }
+
+
+            // The user already has the role.
+            // Check if he actually has reacted.
+
+
+            for (User user1 : user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveReactionUsersById(VERIFY_MESSAGE, VERIFY_EMOJI)) {
+                if (user.getUser().getId().equals(user1.getId())) {
+                    future.complete(true);
+                    return;
+                }
+            }
+
+            future.complete(false);
+        });
+        return future;
+    }
 }
