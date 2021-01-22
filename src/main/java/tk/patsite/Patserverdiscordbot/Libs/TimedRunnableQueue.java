@@ -1,4 +1,4 @@
-package tk.patsite.Patserverdiscordbot.MyLibs;
+package tk.patsite.Patserverdiscordbot.Libs;
 
 import tk.patsite.Patserverdiscordbot.Settings;
 

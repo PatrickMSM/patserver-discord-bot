@@ -1,6 +1,6 @@
 package tk.patsite.Patserverdiscordbot;
 
-import tk.patsite.Patserverdiscordbot.MyLibs.Log;
+import tk.patsite.Patserverdiscordbot.Libs.Log;
 
 import javax.security.auth.login.LoginException;
 

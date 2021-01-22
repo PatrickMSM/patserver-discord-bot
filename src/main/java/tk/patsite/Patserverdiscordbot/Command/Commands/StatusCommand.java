@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.Message;
 import tk.patsite.Patserverdiscordbot.Cache.Cache;
 import tk.patsite.Patserverdiscordbot.Cache.TimeoutCache;
 import tk.patsite.Patserverdiscordbot.Command.Command;
-import tk.patsite.Patserverdiscordbot.ServerPing.CheckServerOnline;
+import tk.patsite.Patserverdiscordbot.Server.CheckServerOnline;
 import tk.patsite.Patserverdiscordbot.Settings;
 
 public class StatusCommand extends Command {

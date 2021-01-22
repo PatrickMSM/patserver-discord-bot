@@ -18,11 +18,10 @@ public class RoleEvent extends ListenerAdapter {
     public void onGuildMemberRoleAdd(GuildMemberRoleAddEvent event) {
         auth.roleAuth(event.getMember(), event.getRoles());
 
-        auth.gotPauthRole(event.getMember()).thenAccept(aBoolean -> {
+        auth.gotPauthRoleNoReact(event.getMember()).thenAccept(aBoolean -> {
             if (aBoolean) {
                 final User user = event.getUser();
                 user.openPrivateChannel().complete().sendMessage(user.getAsMention() + ", Finish the verification by agreeing to the rules in "+ Settings.Channels.RULE_CHANNEL + "!").queue();
-
             }
         });
     }

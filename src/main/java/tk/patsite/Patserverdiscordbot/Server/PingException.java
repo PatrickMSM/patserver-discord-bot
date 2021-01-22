@@ -1,4 +1,4 @@
-package tk.patsite.Patserverdiscordbot.ServerPing;
+package tk.patsite.Patserverdiscordbot.Server;
 
 public class PingException extends RuntimeException {
     public PingException() {

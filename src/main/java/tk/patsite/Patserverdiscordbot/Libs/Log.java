@@ -1,14 +1,12 @@
-package tk.patsite.Patserverdiscordbot.MyLibs;
+package tk.patsite.Patserverdiscordbot.Libs;
 
 import java.util.logging.Logger;
 
 public final class Log {
     private transient final Logger logger;
-    private final String name;
 
     public Log(String name) {
         logger = Logger.getLogger(name);
-        this.name = name;
     }
 
 

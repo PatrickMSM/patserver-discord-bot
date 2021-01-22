@@ -55,9 +55,18 @@ public final class UserAuthenticator {
 
 
 
-    public final CompletableFuture<Boolean> gotPauthRole(Member user) {
+    public final CompletableFuture<Boolean> gotPauthRoleNoReact(Member user) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         executor.execute(() -> {
+            // check the react
+            for (User user1 : user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveReactionUsersById(VERIFY_MESSAGE,VERIFY_EMOJI)) {
+                if (user1.getId().equals(user.getId())) {
+                    setCache(user);
+                    future.complete(false);
+                    return;
+                }
+            }
+
             // check the role
             for (Role role : user.getRoles()) {
                 if (Settings.AuthSettings.PAUTH_ROLE == role.getIdLong()) {
@@ -66,6 +75,7 @@ public final class UserAuthenticator {
                     return;
                 }
             }
+
 
             future.complete(false);
         });
@@ -84,7 +94,6 @@ public final class UserAuthenticator {
             // Check if the user reacted to the correct message
             for (User user1 : user.getGuild().getTextChannelById(Settings.AuthSettings.VERIFY_CHANNEL).retrieveReactionUsersById(VERIFY_MESSAGE,VERIFY_EMOJI)) {
                 if (!user1.getId().equals(user.getId())) {
-                    setCache(user);
                     future.complete(false);
                     return;
                 }
@@ -120,7 +129,6 @@ public final class UserAuthenticator {
             // Check if the user got the correct role
             for (Role role2 : roles) {
                 if (Settings.AuthSettings.PAUTH_ROLE != role2.getIdLong()) {
-                    setCache(user);
                     future.complete(false);
                     return;
                 }

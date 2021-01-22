@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import tk.patsite.Patserverdiscordbot.Command.CommandManager;
 import tk.patsite.Patserverdiscordbot.Events.*;
-import tk.patsite.Patserverdiscordbot.MyLibs.Log;
+import tk.patsite.Patserverdiscordbot.Libs.Log;
 
 import javax.security.auth.login.LoginException;
 

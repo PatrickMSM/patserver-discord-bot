@@ -1,4 +1,4 @@
-package tk.patsite.Patserverdiscordbot.ServerPing;
+package tk.patsite.Patserverdiscordbot.Server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

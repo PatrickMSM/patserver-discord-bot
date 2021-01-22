@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import tk.patsite.Patserverdiscordbot.Command.Command;
-import tk.patsite.Patserverdiscordbot.MyLibs.TimedRunnableQueue;
+import tk.patsite.Patserverdiscordbot.Libs.TimedRunnableQueue;
 import tk.patsite.Patserverdiscordbot.Settings;
 import tk.patsite.Patserverdiscordbot.Util.JDAUtil;
 
