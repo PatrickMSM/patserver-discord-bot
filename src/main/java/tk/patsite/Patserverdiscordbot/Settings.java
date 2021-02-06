@@ -48,7 +48,7 @@ public final class Settings {
         public static final long PATRICK_ID = 300559445988081664L;
         public static final long GUILD_ID = 768515187988103169L;
 
-        public static final String JOIN_LINK = "https://discord.patsite.tk/";
+        public static final String JOIN_LINK = "https://discord.gg/MPeeX3a";
         public static final String ROLE_PURGE_MESSAGE = "{mention}, {purger} mass purged everyone with the role {role}. To rejoin, use link " + JOIN_LINK;
         public static final int MESSAGE_REACTION_CHANCE = 20; // one in 20
 
