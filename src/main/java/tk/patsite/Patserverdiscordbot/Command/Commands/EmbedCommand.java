@@ -42,7 +42,7 @@ public class EmbedCommand extends Command {
 
     @Override
     public void perform(Message message, String[] args) {
-        if (!message.getAuthor().getId().equals(Settings.Misc.PATRICK_ID)) {
+        if (!(message.getAuthor().getIdLong() == Settings.Misc.PATRICK_ID)) {
             return;
         }
         if (args.length >= 1) {
