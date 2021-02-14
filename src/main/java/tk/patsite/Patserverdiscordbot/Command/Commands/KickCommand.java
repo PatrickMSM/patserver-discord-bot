@@ -25,12 +25,13 @@ SOFTWARE.
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.Role;
 import tk.patsite.Patserverdiscordbot.Command.Command;
 import tk.patsite.Patserverdiscordbot.Settings;
 
+public class KickCommand extends Command {
 
-public class PurgeCommand extends Command {
+
+
     @Override
     public String getDescription() {
         return null;
@@ -42,7 +43,6 @@ public class PurgeCommand extends Command {
         if (message.getAuthor().getIdLong() != Settings.Misc.PATRICK_ID)
             return;
 
-
         // Check args
         if (args.length < 1) {
             message.getAuthor().openPrivateChannel().complete().sendMessage("No arguments!").queue();
@@ -50,24 +50,6 @@ public class PurgeCommand extends Command {
             return;
         }
 
-        Role roleToPurge = message.getGuild().getRoleById(args[0]);
-
-        if (roleToPurge == null) {
-            message.getAuthor().openPrivateChannel().complete().sendMessage("Invalid role!").queue();
-            message.delete().queue();
-            return;
-        }
-
-        final String text = Settings.Misc.ROLE_PURGE_MESSAGE
-                .replace("\\{name}", message.getAuthor().getName())
-                .replace("\\{role}", roleToPurge.getName());
-
-        for (Member member : message.getGuild().getMembers()) {
-            if (member.getRoles().stream().anyMatch(roleToPurge::equals)) {
-                String m = text.replace("\\{mention}", member.getAsMention());
-                member.getUser().openPrivateChannel().complete().sendMessage(m).queue();
-                member.kick(m).queue();
-            }
-        }
+        Member member = message.getJDA().getGuildById(Settings.Misc.GUILD_ID).getMemberById(args[1]);
     }
 }
